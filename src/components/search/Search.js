@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import css from './Search.module.css';
+import { fetchSearchMovies } from '../servise/Api'
 import PropTypes from 'prop-types';
 
 const SearchInputSchema = Yup.object().shape({
@@ -17,12 +18,31 @@ const SearchInputSchema = Yup.object().shape({
     ),
 });
 
+
 export const Searchbar = ({ onSubmit }) => {
   function handleSubmit(values, { resetForm }) {
-    const { search } = values;
-    onSubmit(search);
-    resetForm();
-  }
+  const { search } = values;
+  
+  // Виклик функції fetchSearchMovies з переданим значенням search
+  fetchSearchMovies(search)
+    .then((data) => {
+      // Обробка результату пошуку
+      console.log('Search result:', data);
+      // Виклик функції onSubmit з результатом пошуку
+      onSubmit(data);
+    })
+    .catch((error) => {
+      // Обробка помилки пошуку
+      console.error('Error searching movies:', error);
+    });
+  
+  resetForm();
+}
+  // function handleSubmit(values, { resetForm }) {
+  //   const { search } = values;
+  //   onSubmit(search);
+  //   resetForm();
+  // }
 
   return (
     <div>

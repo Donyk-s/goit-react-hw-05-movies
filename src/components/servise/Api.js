@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { useSearchParams } from "react-router-dom"
 
 const ApiKey = 'ce6180729ed4220a4a998763c9b5bf5d';
 const BaseUrl = 'https://api.themoviedb.org/3';
@@ -27,11 +26,25 @@ export const fetchSearchMovies = async (query) => {
         query: query
       }
     });
-    const searchMovies = response.data.results;
-    console.log("Отримано фільми, що шукали:", searchMovies);
-    return searchMovies;
+
+    // Обробка відповіді з сервера
+    const data = response.data;
+    // Повернення результату
+    return data;
   } catch (error) {
-    console.error('Помилка при отриманні фільмів:', error);
-    return null; // або інше значення, що вказує на помилку
+    // Обробка помилки
+    console.error('Error fetching search movies:', error);
+    throw error;
+  }
+}
+
+export const fetchMovieDetails = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${ApiKey}`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Error fetching movie details");
   }
 };
