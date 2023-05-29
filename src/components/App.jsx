@@ -2,7 +2,7 @@ import React from 'react';
 import  Home  from './home/Home';
 import css from './App.module.css';
 import { NavLink, Route, Routes } from 'react-router-dom';
-import { Movies } from './movies/Movies';
+import  Movies from './movies/Movies';
 import MovieDetails from './page/MovieDetails';
 
 export const App = () => {

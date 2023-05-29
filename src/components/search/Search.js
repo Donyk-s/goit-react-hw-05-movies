@@ -18,8 +18,7 @@ const SearchInputSchema = Yup.object().shape({
     ),
 });
 
-
-export const Searchbar = ({ onSubmit }) => {
+ const Searchbar = ({ onSubmit }) => {
   function handleSubmit(values, { resetForm }) {
   const { search } = values;
   
@@ -38,11 +37,7 @@ export const Searchbar = ({ onSubmit }) => {
   
   resetForm();
 }
-  // function handleSubmit(values, { resetForm }) {
-  //   const { search } = values;
-  //   onSubmit(search);
-  //   resetForm();
-  // }
+
 
   return (
     <div>
@@ -75,3 +70,4 @@ export const Searchbar = ({ onSubmit }) => {
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
+export default Searchbar;

@@ -3,7 +3,7 @@ import axios from "axios";
 const ApiKey = 'ce6180729ed4220a4a998763c9b5bf5d';
 const BaseUrl = 'https://api.themoviedb.org/3';
 
-export const fetchTrendingMovies = async () => {
+ export const fetchTrendingMovies = async () => {
   try {
     const response = await axios.get(`${BaseUrl}/trending/movie/day`, {
       params: {
@@ -43,7 +43,12 @@ export const fetchMovieDetails = async (id) => {
     const response = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${ApiKey}`
     );
-    return response.data;
+    const { poster_path, vote_average } = response.data;
+    return {
+      ...response.data,
+      poster_path,
+      vote_average,
+    };
   } catch (error) {
     throw new Error("Error fetching movie details");
   }
