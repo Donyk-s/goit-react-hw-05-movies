@@ -26,13 +26,9 @@ export const fetchSearchMovies = async (query) => {
         query: query
       }
     });
-
-    // Обробка відповіді з сервера
     const data = response.data;
-    // Повернення результату
     return data;
   } catch (error) {
-    // Обробка помилки
     console.error('Error fetching search movies:', error);
     throw error;
   }

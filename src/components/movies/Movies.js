@@ -1,59 +1,55 @@
-// // // import React, { useEffect, useState } from 'react';
-// // // import { fetchSearchMovies } from '../servise/Api';
-// import Searchbar from '../search/Search';
-//  const Movies = () => {
-//   const handleSearchSubmit = (searchData) => {
-   
-//     console.log('Search result:', searchData);
-  
-//   };
-
-//   return (
-//     <div>
-//       <h1>Welcome Home </h1>
-//       <Searchbar onSubmit={handleSearchSubmit} />
-  
-//     </div>
-//   );
-// };
-// export default Movies;
-
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Searchbar from '../search/Search';
 import { fetchSearchMovies } from '../servise/Api';
 
 const Movies = () => {
   const [searchResult, setSearchResult] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearchSubmit = async (searchData) => {
+  useEffect(() => {
+    console.log('searchQuery:', searchQuery);
+    
+    if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {
+      handleSearchSubmit(searchQuery);
+    }
+  }, [searchQuery]);
+
+  const handleSearchSubmit = async (query) => {
     try {
-      const data = await fetchSearchMovies(searchData);
-      const searchResults = data.results; // Отримання результатів пошуку
-      setSearchResult(searchResults); // Збереження результатів пошуку у стані компонента
+      console.log('handleSearchSubmit:', query);
+      
+      const data = await fetchSearchMovies(query);
+      const searchResults = data.results;
+      setSearchResult(searchResults);
     } catch (error) {
       console.error('Error searching movies:', error);
     }
   };
-  
+
+  const handleSubmit = (value) => {
+    console.log('handleSubmit:', value);
+    
+    setSearchQuery(value);
+  };
 
   return (
     <div>
       <h1>Welcome Home</h1>
-      <Searchbar onSubmit={handleSearchSubmit} />
+      <Searchbar onSubmit={handleSubmit} />
 
       {searchResult && (
         <div>
           <h2>Search Result:</h2>
           <ul>
-            {searchResult.results.map((movie) => (
+            {searchResult.map((movie) => (
               <li key={movie.id}>
-                <img
+                {/* <img
                   src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
                   alt={movie.title}
-                />
+                /> */}
                 <div>
                   <h3>{movie.title}</h3>
-                  <p>Rating: {movie.vote_average}</p>
+                  {/* <p>Rating: {movie.vote_average}</p> */}
                 </div>
               </li>
             ))}
@@ -62,6 +58,7 @@ const Movies = () => {
       )}
     </div>
   );
-};
+}
 
 export default Movies;
+
