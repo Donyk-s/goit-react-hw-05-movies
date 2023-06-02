@@ -27,9 +27,9 @@ const Cast = () => {
             <li key={actor.cast_id}>
               <h3>{actor.name}</h3>
               <p>Character: {actor.character}</p>
-              {actor.profilePath && (
-  <img src={`https://image.tmdb.org/t/p/w500/${actor.profilePath}`} alt={actor.name} />
-)}
+              {actor.profile_path && (
+                <img src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`} alt={actor.name} />
+              )}
             </li>
           ))}
         </ul>
