@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { fetchMovieDetails } from '../servise/Api';
-
+import { Link, useParams, useLocation } from "react-router-dom";
+import { fetchMovieDetails } from '../serviсe/Api';
+import { BiChevronsLeft } from "react-icons/bi"
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  
-  // Опціонально визначаємо функцію getMovieById
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? "/";
+
   const getMovieById = async (id) => {
     try {
       const data = await fetchMovieDetails(id);
@@ -29,9 +30,12 @@ const MovieDetails = () => {
   if (!movie) {
     return <p>Loading...</p>;
   }
-
+  
   return (
-    <div>
+    <main>
+       <Link to={backLinkHref}>
+        <BiChevronsLeft/>Back to Home page</Link>
+     
       <h1>{movie.title}</h1>
       
       <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
@@ -45,7 +49,7 @@ const MovieDetails = () => {
           <Link to={`/movies/${id}/reviews`}>Reviews</Link>
         </li>
       </ul>
-    </div>
+    </main>
   );
 };
 

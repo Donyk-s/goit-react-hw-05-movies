@@ -18,6 +18,7 @@ const BaseUrl = 'https://api.themoviedb.org/3';
     return [];
   }
 };
+
 export const fetchSearchMovies = async (query) => {
   try {
     const response = await axios.get(`${BaseUrl}/search/movie`, {
@@ -49,3 +50,26 @@ export const fetchMovieDetails = async (id) => {
     throw new Error("Error fetching movie details");
   }
 };
+
+
+export const fetchCast = async (id) => {
+  try {
+    const response = await axios.get(
+      `${BaseUrl}/movie/${id}/credits?api_key=${ApiKey}`
+    );
+    const { cast } = response.data;
+    return {
+      cast: cast.map((actor) => ({
+        character: actor.character,
+        name: actor.name,
+        profile_path: actor.profile_path,
+        cast_id: actor.cast_id
+      }))
+    };
+  } catch (error) {
+    throw new Error("Error fetching movie cast");
+  }
+};
+
+
+
