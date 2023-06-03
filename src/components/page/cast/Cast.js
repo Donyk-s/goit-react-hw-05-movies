@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchCast } from '../../serviсe/Api';
+import css from './Cast.module.css'
 
 const Cast = () => {
   const { id } = useParams();
@@ -23,13 +24,13 @@ const Cast = () => {
   return (
     <div>
       {cast ? (
-        <ul>
+        <ul className={css.castList}>
           {cast.map((actor) => (
             <li key={actor.cast_id}>
               <h3>{actor.name}</h3>
               <p>Character: {actor.character}</p>
               {actor.profile_path && (
-                <img src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`} alt={actor.name} />
+                <img src={`https://image.tmdb.org/t/p/w400/${actor.profile_path}`} alt={actor.name} />
               )}
             </li>
           ))}

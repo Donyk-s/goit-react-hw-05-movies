@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useLocation, Outlet } from "react-router-dom";
-import { fetchMovieDetails } from '../serviсe/Api';
+import { fetchMovieDetails } from '../../serviсe/Api';
 import { BiChevronsLeft } from "react-icons/bi"
+import { Suspense } from "react";
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
@@ -49,6 +50,7 @@ const MovieDetails = () => {
           <Link to={`/movies/${id}/reviews`}>Reviews</Link>
         </li>
       </ul>
+      <Suspense fallback={<div>Loading subpage...</div>}></Suspense>
       <Outlet />
     </main>
   );

@@ -1,0 +1,17 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.mainNav{
+    list-style: none;
+    display: flex;
+    
+}
+.mainLink{
+    margin: 10px;
+   
+}
+.text{
+    text-decoration: none;
+}

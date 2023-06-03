@@ -1,6 +1,8 @@
-import { NavLink, useLocation, Link } from "react-router-dom";
+import { NavLink, useLocation,} from "react-router-dom";
 import { BiMoviePlay } from "react-icons/bi";
 import { Outlet } from "react-router-dom";
+import { Suspense } from "react";
+import css from './SharedLayout.module.css'
 
 export const SharedLayout = () => {
   const location = useLocation();
@@ -8,20 +10,25 @@ export const SharedLayout = () => {
 
   return (
     <div>
-      <header>
+      <header className={css.header}>
         <NavLink to={biMoviePlayIcon}>
-          <BiMoviePlay /> We can show movie
+          <BiMoviePlay />
         </NavLink>
 
         <nav>
-          <Link to="/" end>
-            Home
-          </Link>
-          <Link to="/movies">Movies</Link>
-        
+          <ul className={css.mainNav}>
+            <li className={css.mainLink}>
+              <NavLink className={css.text} to="/">Home</NavLink>
+              </li>
+              <li className={css.mainLink}>
+                <NavLink className={css.text} to="/movies">Movies</NavLink>
+                </li>
+          </ul>
         </nav>
       </header>
+      <Suspense fallback={<div>Loading page...</div>}>
       <Outlet />
+      </Suspense>
     </div>
   );
 };

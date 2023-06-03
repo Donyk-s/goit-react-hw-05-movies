@@ -52,19 +52,6 @@ export const fetchMovieDetails = async (id) => {
 };
 
 
-// export const fetchCast = async (id) => {
-//   try {
-//     const response = await axios.get(
-//       `${BaseUrl}/movie/${id}/credits?api_key=${ApiKey}`
-//     );
-//     const { cast } = response.data;
-//     return {
-//       cast: cast
-//     };
-//   } catch (error) {
-//     throw new Error("Error fetching movie cast");
-//   }
-// };
 export const fetchCast = async (id) => {
   try {
     const response = await axios.get(
@@ -84,7 +71,21 @@ export const fetchCast = async (id) => {
     throw new Error("Error fetching movie details");
   }
 };
+export const fetchReviews = async (movieId) => {
+  try {
+    const response = await axios.get(`${BaseUrl}/movie/${movieId}/reviews`, {
+      params: {
+        api_key: ApiKey,
+      },
+    });
 
+    const reviews = response.data.results;
+    return reviews;
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    return [];
+  }
+};
 
 
 
