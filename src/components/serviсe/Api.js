@@ -52,24 +52,42 @@ export const fetchMovieDetails = async (id) => {
 };
 
 
+// export const fetchCast = async (id) => {
+//   try {
+//     const response = await axios.get(
+//       `${BaseUrl}/movie/${id}/credits?api_key=${ApiKey}`
+//     );
+//     const { cast } = response.data;
+//     return {
+//       cast: cast
+//     };
+//   } catch (error) {
+//     throw new Error("Error fetching movie cast");
+//   }
+// };
 export const fetchCast = async (id) => {
   try {
     const response = await axios.get(
       `${BaseUrl}/movie/${id}/credits?api_key=${ApiKey}`
     );
     const { cast } = response.data;
+    const updatedCast = cast.map((actor) => ({
+      ...actor,
+      profilePath: actor.profile_path
+        ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+        : null,
+    }));
     return {
-      cast: cast.map((actor) => ({
-        character: actor.character,
-        name: actor.name,
-        profile_path: actor.profile_path,
-        cast_id: actor.cast_id
-      }))
+      cast: updatedCast,
     };
   } catch (error) {
-    throw new Error("Error fetching movie cast");
+    throw new Error("Error fetching movie details");
   }
 };
+
+
+
+
 
 
 

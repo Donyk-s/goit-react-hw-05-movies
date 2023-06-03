@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation, Outlet } from "react-router-dom";
 import { fetchMovieDetails } from '../serviсe/Api';
 import { BiChevronsLeft } from "react-icons/bi"
 const MovieDetails = () => {
@@ -49,6 +49,7 @@ const MovieDetails = () => {
           <Link to={`/movies/${id}/reviews`}>Reviews</Link>
         </li>
       </ul>
+      <Outlet />
     </main>
   );
 };
