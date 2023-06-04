@@ -19,6 +19,21 @@ const BaseUrl = 'https://api.themoviedb.org/3';
   }
 };
 
+// export const fetchSearchMovies = async (query) => {
+//   try {
+//     const response = await axios.get(`${BaseUrl}/search/movie`, {
+//       params: {
+//         api_key: ApiKey,
+//         query: query
+//       }
+//     });
+//     const data = response.data;
+//     return data;
+//   } catch (error) {
+//     console.error('Error fetching search movies:', error);
+//     throw error;
+//   }
+// }
 export const fetchSearchMovies = async (query) => {
   try {
     const response = await axios.get(`${BaseUrl}/search/movie`, {
@@ -28,12 +43,21 @@ export const fetchSearchMovies = async (query) => {
       }
     });
     const data = response.data;
-    return data;
+    const moviesWithId = data.results.map(movie => ({
+      ...movie,
+      movieId: movie.id
+    }));
+
+    return {
+      ...data,
+      results: moviesWithId
+    };
   } catch (error) {
     console.error('Error fetching search movies:', error);
     throw error;
   }
-}
+};
+
 
 export const fetchMovieDetails = async (id) => {
   try {
