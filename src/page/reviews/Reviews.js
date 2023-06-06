@@ -5,7 +5,7 @@ import Loader from '../../components/loader/Loader';
 
 const Reviews = () => {
   const { id } = useParams();
-  const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -31,7 +31,7 @@ const Reviews = () => {
   return (
     <div>
       <h2>Reviews:</h2>
-      {reviews ? (
+      {reviews.length > 0 ? (
         <ul>
           {reviews.map((review) => (
             <li key={review.id}>

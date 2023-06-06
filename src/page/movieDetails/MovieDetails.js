@@ -12,7 +12,7 @@ const MovieDetails = () => {
   const [error, setError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const backLinkHref = location.state?.from ;
-  const defaultImg = 'https://example.com/default-poster.jpg';
+  const defaultImg = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
 
   const getMovieById = async (id) => {
     try {
@@ -59,10 +59,16 @@ const MovieDetails = () => {
       <p>Rating: {movie.vote_average}</p>
       <ul className={css.detailsList}>
         <li >
-          <NavLink className={css.detailsItems} to={`/movies/${id}/cast`}>Cast</NavLink>
+          <NavLink className={css.detailsItems} 
+          to={`/movies/${id}/cast`}
+          state={{from: backLinkHref}}
+          >Cast</NavLink>
         </li>
         <li>
-          <NavLink className={css.detailsItems} to={`/movies/${id}/reviews`}>Reviews</NavLink>
+          <NavLink className={css.detailsItems}
+          to={`/movies/${id}/reviews`}
+          state={{from: backLinkHref}}
+          >Reviews</NavLink>
         </li>
       </ul>
       <Suspense fallback={<div>Loading subpage...</div>}></Suspense>

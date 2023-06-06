@@ -25,16 +25,8 @@ export const fetchSearchMovies = async (query) => {
         query: query
       }
     });
-    const data = response.data;
-    const moviesWithId = data.results.map(movie => ({
-      ...movie,
-      movieId: movie.id
-    }));
-
-    return {
-      ...data,
-      results: moviesWithId
-    };
+    
+    return response.data.results;
   } catch (error) {
     throw error;
   }
