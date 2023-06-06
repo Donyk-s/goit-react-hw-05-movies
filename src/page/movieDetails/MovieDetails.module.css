@@ -1,0 +1,12 @@
+.backLink{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  text-decoration: none;
+}
+.detailsList{
+  list-style-type: none;
+}
+.detailsItems{
+  text-decoration: none;
+}

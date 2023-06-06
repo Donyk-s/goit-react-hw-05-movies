@@ -1,53 +1,68 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useLocation, Outlet } from "react-router-dom";
+import { useParams, useLocation, Outlet, NavLink } from "react-router-dom";
 import { fetchMovieDetails } from '../../serviсe/Api';
 import { BiChevronsLeft } from "react-icons/bi"
 import { Suspense } from "react";
+import css from './MovieDetails.module.css'
+import Loader from "components/loader/Loader";
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? "/";
+  const [error, setError] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const backLinkHref = location.state?.from ;
+  const defaultImg = 'https://example.com/default-poster.jpg';
 
   const getMovieById = async (id) => {
     try {
       const data = await fetchMovieDetails(id);
       return data;
     } catch (error) {
-      console.error("Error fetching movie details:", error);
       return null;
     }
   };
 
   useEffect(() => {
     const fetchMovie = async () => {
+      setIsLoading(true);
+      setError(false); 
       const movieData = await getMovieById(id);
       setMovie(movieData);
+      setIsLoading(false); 
     };
-
     fetchMovie();
   }, [id]);
-
-  if (!movie) {
-    return <p>Loading...</p>;
+  if (isLoading) {
+    return <Loader />; 
   }
-  
+  if (error) {
+    return <p>Error occurred while fetching movie details.</p>; 
+  }
   return (
     <main>
-       <Link to={backLinkHref}>
-        <BiChevronsLeft/>Back to Home page</Link>
+       <NavLink className={css.backLink} to={backLinkHref}>
+        <BiChevronsLeft/>Return to the previous page</NavLink>
      
       <h1>{movie.title}</h1>
       
-      <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
+      <img
+  src={
+    movie && movie.poster_path
+      ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+      : defaultImg
+  }
+  width={500}
+  alt="poster"
+/>
       <p>Overview: {movie.overview}</p>
       <p>Rating: {movie.vote_average}</p>
-      <ul>
-        <li>
-          <Link to={`/movies/${id}/cast`}>Cast</Link>
+      <ul className={css.detailsList}>
+        <li >
+          <NavLink className={css.detailsItems} to={`/movies/${id}/cast`}>Cast</NavLink>
         </li>
         <li>
-          <Link to={`/movies/${id}/reviews`}>Reviews</Link>
+          <NavLink className={css.detailsItems} to={`/movies/${id}/reviews`}>Reviews</NavLink>
         </li>
       </ul>
       <Suspense fallback={<div>Loading subpage...</div>}></Suspense>

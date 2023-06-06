@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchReviews } from '../../serviсe/Api';
+import Loader from '../../components/loader/Loader';
 
 const Reviews = () => {
   const { id } = useParams();
   const [reviews, setReviews] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getReviews = async () => {
@@ -12,13 +15,19 @@ const Reviews = () => {
         const fetchedReviews = await fetchReviews(id);
         setReviews(fetchedReviews);
       } catch (error) {
-        console.error("Error fetching reviews:", error);
+        setError(true);
+      } finally {
+        setIsLoading(false);
       }
     };
-
     getReviews();
   }, [id]);
-
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (error) {
+    return <p>Error occurred while fetching reviews.</p>;
+  }
   return (
     <div>
       <h2>Reviews:</h2>
@@ -32,7 +41,7 @@ const Reviews = () => {
           ))}
         </ul>
       ) : (
-        <p>Loading reviews...</p>
+        <p>No reviews available.</p>
       )}
     </div>
   );

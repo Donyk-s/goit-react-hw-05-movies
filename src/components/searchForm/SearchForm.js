@@ -1,24 +1,26 @@
-
 import React, { useState } from "react";
-
+import PropTypes from 'prop-types';
 const SearchForm = ({ onSubmit }) => {
   const [query, setQuery] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(query);
-  };
 
   const handleChange = (e) => {
     setQuery(e.target.value);
   };
 
+  const handleSearch = () => {
+    onSubmit(query);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <input type="text" name="query" value={query} onChange={handleChange} />
-      <button type="submit">Search</button>
-    </form>
+      <button onClick={handleSearch}>Search</button>
+    </div>
   );
-}
+};
+
+SearchForm.propTypes ={
+  onSubmit: PropTypes.func.isRequired
+};
 
 export default SearchForm;

@@ -11,29 +11,12 @@ const BaseUrl = 'https://api.themoviedb.org/3';
       }
     });
     const trendingMovies = response.data.results;
-    console.log("Отримано трендові фільми:", trendingMovies);
     return trendingMovies;
   } catch (error) {
-    console.error('Помилка при отриманні трендових фільмів:', error);
     return [];
   }
 };
 
-// export const fetchSearchMovies = async (query) => {
-//   try {
-//     const response = await axios.get(`${BaseUrl}/search/movie`, {
-//       params: {
-//         api_key: ApiKey,
-//         query: query
-//       }
-//     });
-//     const data = response.data;
-//     return data;
-//   } catch (error) {
-//     console.error('Error fetching search movies:', error);
-//     throw error;
-//   }
-// }
 export const fetchSearchMovies = async (query) => {
   try {
     const response = await axios.get(`${BaseUrl}/search/movie`, {
@@ -53,7 +36,6 @@ export const fetchSearchMovies = async (query) => {
       results: moviesWithId
     };
   } catch (error) {
-    console.error('Error fetching search movies:', error);
     throw error;
   }
 };
@@ -106,7 +88,6 @@ export const fetchReviews = async (movieId) => {
     const reviews = response.data.results;
     return reviews;
   } catch (error) {
-    console.error("Error fetching reviews:", error);
     return [];
   }
 };
